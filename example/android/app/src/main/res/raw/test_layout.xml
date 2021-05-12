@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<NimmstaLayout name="test_layout">
+    <device>
+        <screen default="true" name="default">
+            <staticElements>
+                <StatusBar />
+                <!-- you can use spaces if the + otherwise would be on the left -->
+                <cell x="10" y="30" name="title">Default Title</cell>
+                <cell x="10" y="50" name="subtitle">Default Subtitle</cell>
+                <button x="10" width="180" name="next_task" action="new task">Next Task</button>
+            </staticElements>
+        </screen>
+    </device>
+</NimmstaLayout>

@@ -1,0 +1,4 @@
+enum ScanPickingMode {
+  DISABLED,
+  ENABLED,
+}
