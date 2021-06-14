@@ -22,7 +22,6 @@ import com.nimmsta.core.shared.textprotocol.event.ScanEvent;
 import com.nimmsta.core.shared.textprotocol.event.TouchEvent;
 import com.nimmsta.core.shared.textprotocol.request.ChangeTriggerModeRequest;
 import com.nimmsta.core.shared.textprotocolapi.softwareupdate.model.SoftwareUpdateProgress;
-import com.soywiz.korio.file.std.LocalVfs;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +36,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import kotlin.Unit;
 
 /**
  * NimmstaSdkPlugin

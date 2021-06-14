@@ -15,10 +15,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _barcode = "Unknown";
+  String? _barcode = "Unknown";
   String _connectionFlag = "disconnected";
 
-  NimmstaSdk nimmstaSdk;
+  late NimmstaSdk nimmstaSdk;
 
   @override
   void initState() {

@@ -15,7 +15,7 @@ class NimmstaSdk {
   final void Function(dynamic) didScanBarcodeCallback;
 
   NimmstaSdk(
-      {this.didConnectAndInitCallback, this.didDisconnectCallback, this.didTouchCallback, this.didClickButtonCallback, this.didScanBarcodeCallback}) {
+      {required this.didConnectAndInitCallback, required this.didDisconnectCallback, required this.didTouchCallback, required this.didClickButtonCallback, required this.didScanBarcodeCallback}) {
     _channel.setMethodCallHandler((MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'didConnectAndInit':
@@ -40,7 +40,7 @@ class NimmstaSdk {
   }
 
   /// Shows a screen that permits to connect a Nimmsta device scanning a QrCode
-  Future<bool> isConnected() async {
+  Future<bool?> isConnected() async {
     return await _channel.invokeMethod<bool>("isConnected");
   }
 
