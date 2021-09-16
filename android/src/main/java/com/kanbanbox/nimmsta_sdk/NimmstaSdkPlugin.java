@@ -364,12 +364,24 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
 
     @Override
     public void didConnectAndInit(@NotNull NIMMSTADevice nimmstaDevice) {
+        Log.i("NIMMSTA SDK", "didConnectAndInit()");
+
+        // If is reconnect
+        if (nimmstaDevice.getConnectCount() > 1) {
+            activity.runOnUiThread(new Runnable() {
+                public void run() {
+                    channel.invokeMethod("didReconnectAndInit", nimmstaDevice.getAddress().toString());
+                }
+            });
+
+            return;
+        }
+
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 channel.invokeMethod("didConnectAndInit", nimmstaDevice.getAddress().toString());
             }
         });
-        Log.i("NIMMSTA SDK", "didConnectAndInit()");
     }
 
     @Override

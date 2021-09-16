@@ -9,6 +9,7 @@ class NimmstaSdk {
   static const MethodChannel _channel = const MethodChannel("nimmsta_sdk_methods");
 
   final void Function(dynamic) didConnectAndInitCallback;
+  final void Function(dynamic) didReconnectAndInitCallback;
   final void Function() didDisconnectCallback;
   final void Function(dynamic) didTouchCallback;
   final void Function(dynamic) didClickButtonCallback;
@@ -17,6 +18,7 @@ class NimmstaSdk {
 
   NimmstaSdk(
       {required this.didConnectAndInitCallback,
+      required this.didReconnectAndInitCallback,
       required this.didDisconnectCallback,
       required this.didTouchCallback,
       required this.didClickButtonCallback,
@@ -26,6 +28,9 @@ class NimmstaSdk {
       switch (methodCall.method) {
         case 'didConnectAndInit':
           this.didConnectAndInitCallback(methodCall.arguments);
+          break;
+        case 'didReconnectAndInit':
+          this.didReconnectAndInitCallback(methodCall.arguments);
           break;
         case 'didDisconnect':
           this.didDisconnectCallback();
