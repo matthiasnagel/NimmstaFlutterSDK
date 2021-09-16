@@ -8,7 +8,9 @@ import androidx.annotation.Nullable;
 
 import com.nimmsta.barcode.Barcode;
 import com.nimmsta.core.android.device.NIMMSTADeviceExtension;
+import com.nimmsta.core.android.framework.NIMMSTAConnectionManager;
 import com.nimmsta.core.android.framework.NIMMSTAServiceConnection;
+import com.nimmsta.core.shared.device.BluetoothDeviceMacAddress;
 import com.nimmsta.core.shared.device.NIMMSTADevice;
 import com.nimmsta.core.shared.device.NIMMSTAEventHandler;
 import com.nimmsta.core.shared.exception.bluetooth.BluetoothDisconnectedException;
@@ -48,6 +50,7 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
     private MethodChannel channel;
 
     NIMMSTAServiceConnection serviceConnection;
+    NIMMSTAConnectionManager connectionManager;
 
     private Activity activity;
 
@@ -70,6 +73,12 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
 
         if (call.method.equals("connect")) {
             this.connect();
+            result.success(null);
+            return;
+        }
+
+        if (call.method.equals("reconnect")) {
+            this.reconnect(call.argument("deviceAddress"));
             result.success(null);
             return;
         }
@@ -145,6 +154,7 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
                                 serviceConnection.displayConnectionActivity();
                             }
 
+                            connectionManager = serviceConnection.getConnectionManager();
                         } catch (Throwable throwable) {
                             throwable.printStackTrace();
                         }
@@ -161,6 +171,27 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
         });
     }
 
+    public void reconnect(String deviceAddress){
+        serviceConnection = NIMMSTAServiceConnection.bindServiceToActivity(activity, this).onComplete(new NIMMSTADoneCallback<Task<NIMMSTAServiceConnection>>() {
+            @Override
+            public void onDone(Task<NIMMSTAServiceConnection> result) {
+                try {
+                    // this is the point in time when the (background) task completes and the result throws if an error occurred.
+                    result.getResult();
+
+                    connectionManager = serviceConnection.getConnectionManager();
+                    if(connectionManager != null){
+                        connectionManager.connectAsync(new BluetoothDeviceMacAddress(deviceAddress));
+                    }
+
+                } catch (Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+            }
+        });
+
+    }
+
     public boolean isConnected(){
         if(serviceConnection == null){
             return false;
@@ -170,6 +201,12 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
         if (device == null) {
             return false;
         }
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                channel.invokeMethod("connectedWithDeviceAddress", device.getAddress().toString());
+            }
+        });
 
         return device.isConnected();
     }
@@ -231,7 +268,7 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
 
         if (settings.containsKey("preferredPickingMode")) {
             ChangeTriggerModeRequest.ScanPickingMode pickingMode;
-            switch (Objects.requireNonNull(settings.get("preferredTriggerMode"))) {
+            switch (Objects.requireNonNull(settings.get("preferredPickingMode"))) {
                 case "ScanPickingMode.ENABLED":
                     pickingMode = ChangeTriggerModeRequest.ScanPickingMode.ENABLED;
                     break;
@@ -322,7 +359,6 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
             });
         }
 
-
         Log.i("NIMMSTA SDK", "didTouch()");
     }
 
@@ -330,7 +366,7 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
     public void didConnectAndInit(@NotNull NIMMSTADevice nimmstaDevice) {
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                channel.invokeMethod("didConnectAndInit", null);
+                channel.invokeMethod("didConnectAndInit", nimmstaDevice.getAddress().toString());
             }
         });
         Log.i("NIMMSTA SDK", "didConnectAndInit()");

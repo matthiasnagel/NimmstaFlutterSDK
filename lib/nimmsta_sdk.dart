@@ -8,18 +8,24 @@ import 'package:nimmsta_sdk/models/scan_trigger_mode.dart';
 class NimmstaSdk {
   static const MethodChannel _channel = const MethodChannel("nimmsta_sdk_methods");
 
-  final void Function() didConnectAndInitCallback;
+  final void Function(dynamic) didConnectAndInitCallback;
   final void Function() didDisconnectCallback;
   final void Function(dynamic) didTouchCallback;
   final void Function(dynamic) didClickButtonCallback;
   final void Function(dynamic) didScanBarcodeCallback;
+  final void Function(dynamic) connectedWithDeviceAddress;
 
   NimmstaSdk(
-      {required this.didConnectAndInitCallback, required this.didDisconnectCallback, required this.didTouchCallback, required this.didClickButtonCallback, required this.didScanBarcodeCallback}) {
+      {required this.didConnectAndInitCallback,
+      required this.didDisconnectCallback,
+      required this.didTouchCallback,
+      required this.didClickButtonCallback,
+      required this.didScanBarcodeCallback,
+      required this.connectedWithDeviceAddress}) {
     _channel.setMethodCallHandler((MethodCall methodCall) async {
       switch (methodCall.method) {
         case 'didConnectAndInit':
-          this.didConnectAndInitCallback();
+          this.didConnectAndInitCallback(methodCall.arguments);
           break;
         case 'didDisconnect':
           this.didDisconnectCallback();
@@ -32,6 +38,9 @@ class NimmstaSdk {
           break;
         case 'didScanBarcode':
           this.didScanBarcodeCallback(methodCall.arguments);
+          break;
+        case 'connectedWithDeviceAddress':
+          this.connectedWithDeviceAddress(methodCall.arguments);
           break;
         default:
           throw MissingPluginException('notImplemented');
@@ -47,6 +56,13 @@ class NimmstaSdk {
   /// Shows a screen that permits to connect a Nimmsta device scanning a QrCode
   Future<void> connect() async {
     return await _channel.invokeMethod("connect");
+  }
+
+  /// Tries to reconnect to a previously connected Nimmsta device
+  Future<void> reconnect(String deviceAddress) async {
+    return await _channel.invokeMethod("reconnect", <String, dynamic>{
+      'deviceAddress': deviceAddress
+    });
   }
 
   /// Disconnect a Nimmsta device if it's connected
