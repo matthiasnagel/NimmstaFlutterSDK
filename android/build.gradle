@@ -10,11 +10,11 @@ group 'com.kanbanbox.nimmsta_sdk'
 version '1.0'
 
 buildscript {
-    ext.kotlin_version = '1.5.30'
+    ext.kotlin_version = '1.5.31'
 
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -26,7 +26,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven {
             url 'https://maven.goma-cms.org/repository/nimmsta-core-release/'
             credentials {
@@ -63,7 +63,7 @@ android {
 }
 
 dependencies {
-    api("com.nimmsta.core:shared-android:5.0.3609@aar")
+    api("com.nimmsta.core:shared-android:5.0.3732@aar")
     api("com.nimmsta.core:android:5.0.2349@aar") {
         transitive = true
         changing = true
