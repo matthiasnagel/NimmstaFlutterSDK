@@ -28,28 +28,57 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initNimmsta() async {
-    nimmstaSdk = NimmstaSdk(didConnectAndInitCallback: () async {
-      await nimmstaSdk.setLayout("test_layout", {
-        "title": "Device status",
-        "subtitle": "CONNECTED!",
-      });
-      await nimmstaSdk.pushSettings(true, true, Trigger.ScanTriggerMode.Button, Picking.ScanPickingMode.DISABLED);
-      setState(() {
-        _connectionFlag = "connected";
-      });
-    }, didDisconnectCallback: () {
-      setState(() {
-        _connectionFlag = "disconnected";
-      });
-    }, didTouchCallback: (dynamic arguments) {
-      debugPrint("NIMMSTA SDK: didTouchCallback with coordinates ${arguments.toString()}");
-    }, didClickButtonCallback: (dynamic action) {
-      debugPrint("NIMMSTA SDK: didClickButtonCallback with action $action");
-    }, didScanBarcodeCallback: (dynamic barcode) {
-      setState(() {
-        _barcode = barcode;
-      });
-    });
+    nimmstaSdk = NimmstaSdk(
+        didConnectAndInitCallback: (deviceAddress) async {
+          await nimmstaSdk.setLayout("test_layout", {
+            "title": "Device status",
+            "subtitle": "didConnectAndInitCallback",
+          });
+          await nimmstaSdk.pushSettings(true, true,
+              Trigger.ScanTriggerMode.Button, Picking.ScanPickingMode.DISABLED);
+          setState(() {
+            _connectionFlag = "didConnectAndInitCallback";
+          });
+        },
+        didDisconnectCallback: () {
+          setState(() {
+            _connectionFlag = "disconnected";
+          });
+        },
+        didTouchCallback: (dynamic arguments) {
+          debugPrint(
+              "NIMMSTA SDK: didTouchCallback with coordinates ${arguments.toString()}");
+        },
+        didClickButtonCallback: (dynamic action) {
+          debugPrint("NIMMSTA SDK: didClickButtonCallback with action $action");
+        },
+        didScanBarcodeCallback: (dynamic barcode) {
+          setState(() {
+            _barcode = barcode;
+          });
+        },
+        didReconnectAndInitCallback: (deviceAddress) async {
+          await nimmstaSdk.setLayout("test_layout", {
+            "title": "Device status",
+            "subtitle": "didReconnectAndInitCallback",
+          });
+          await nimmstaSdk.pushSettings(true, true,
+              Trigger.ScanTriggerMode.Button, Picking.ScanPickingMode.DISABLED);
+          setState(() {
+            _connectionFlag = "didReconnectAndInitCallback";
+          });
+        },
+        connectedWithDeviceAddress: (deviceAddress) async {
+          await nimmstaSdk.setLayout("test_layout", {
+            "title": "Device status",
+            "subtitle": "connectedWithDeviceAddress",
+          });
+          await nimmstaSdk.pushSettings(true, true,
+              Trigger.ScanTriggerMode.Button, Picking.ScanPickingMode.DISABLED);
+          setState(() {
+            _connectionFlag = "connectedWithDeviceAddress";
+          });
+        },);
   }
 
   @override
