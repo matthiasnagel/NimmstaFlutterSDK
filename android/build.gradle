@@ -10,7 +10,7 @@ group 'com.kanbanbox.nimmsta_sdk'
 version '1.0'
 
 buildscript {
-    ext.kotlin_version = '1.5.31'
+    ext.kotlin_version = '1.6.10'
 
     repositories {
         google()
@@ -63,10 +63,10 @@ android {
 }
 
 dependencies {
-    api("com.nimmsta.core:shared-android:5.0.3814@aar")
+    api("com.nimmsta.core:shared-android:5.0.3895@aar")
     api("com.nimmsta.core:android:5.0.2349@aar") {
         transitive = true
         changing = true
     }
-    implementation "androidx.appcompat:appcompat:1.4.0"
+    implementation "androidx.appcompat:appcompat:1.4.1"
 }
