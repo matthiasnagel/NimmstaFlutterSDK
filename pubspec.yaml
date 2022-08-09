@@ -2,7 +2,7 @@ name: nimmsta_sdk
 description: A Flutter wrapper of Nimmsta sdk
 
 version: 1.0.1
-homepage: https://github.com/KanbanBOX/NimmstaSDK
+homepage: https://github.com/KanbanBOX/NimmstaFlutterSDK
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
