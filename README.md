@@ -40,7 +40,7 @@ Add this style in `/res/values/styles.xml`:
 </resources>
 ```
 
-Add this to you app level gradle:
+Add this to your app level gradle:
 ``` 
 android {
     ...
