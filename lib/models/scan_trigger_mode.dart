@@ -1,6 +1,1 @@
-enum ScanTriggerMode {
-  Disabled,
-  Button,
-  Touch,
-  ButtonAndTouch
-}
+enum ScanTriggerMode { Disabled, Button, Touch, ButtonAndTouch }

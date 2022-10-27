@@ -26,12 +26,12 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.kanbanbox.nimmsta_sdk_example"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
@@ -61,5 +61,5 @@ flutter {
 }
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:1.4.2"
+    implementation "androidx.appcompat:appcompat:1.5.1"
 }

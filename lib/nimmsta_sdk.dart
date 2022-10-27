@@ -6,7 +6,8 @@ import 'package:nimmsta_sdk/models/scan_picking_mode.dart';
 import 'package:nimmsta_sdk/models/scan_trigger_mode.dart';
 
 class NimmstaSdk {
-  static const MethodChannel _channel = const MethodChannel("nimmsta_sdk_methods");
+  static const MethodChannel _channel =
+      const MethodChannel("nimmsta_sdk_methods");
 
   final void Function(dynamic) didConnectAndInitCallback;
   final void Function(dynamic) didReconnectAndInitCallback;
@@ -65,9 +66,8 @@ class NimmstaSdk {
 
   /// Tries to reconnect to a previously connected Nimmsta device
   Future<void> reconnect(String deviceAddress) async {
-    return await _channel.invokeMethod("reconnect", <String, dynamic>{
-      'deviceAddress': deviceAddress
-    });
+    return await _channel.invokeMethod(
+        "reconnect", <String, dynamic>{'deviceAddress': deviceAddress});
   }
 
   /// Disconnect a Nimmsta device if it's connected
@@ -75,7 +75,8 @@ class NimmstaSdk {
     return await _channel.invokeMethod("disconnect");
   }
 
-  Future<void> setLayout(String layoutResource, Map<String, String> dataToInject) async {
+  Future<void> setLayout(
+      String layoutResource, Map<String, String> dataToInject) async {
     return await _channel.invokeMethod<void>("setLayout", <String, dynamic>{
       'layoutResource': layoutResource,
       'dataToInject': dataToInject,
@@ -89,7 +90,10 @@ class NimmstaSdk {
   }
 
   Future<void> pushSettings(
-      bool prefersReconnect, bool prefersShutdownOnCharge, ScanTriggerMode preferredTriggerMode, ScanPickingMode preferredPickingMode) async {
+      bool prefersReconnect,
+      bool prefersShutdownOnCharge,
+      ScanTriggerMode preferredTriggerMode,
+      ScanPickingMode preferredPickingMode) async {
     return await _channel.invokeMethod("pushSettings", {
       "settings": {
         "prefersReconnect": prefersReconnect.toString(),
@@ -108,7 +112,8 @@ class NimmstaSdk {
     });
   }
 
-  Future<void> triggerLEDBurst(int repeat, int duration, int pulseDuration, Color color) async {
+  Future<void> triggerLEDBurst(
+      int repeat, int duration, int pulseDuration, Color color) async {
     return await _channel.invokeMethod("triggerLEDBurst", {
       "repeat": repeat,
       "duration": duration,
@@ -119,7 +124,8 @@ class NimmstaSdk {
     });
   }
 
-  Future<void> triggerVibrationBurst(int repeat, int duration, int pulseDuration, int intensity) async {
+  Future<void> triggerVibrationBurst(
+      int repeat, int duration, int pulseDuration, int intensity) async {
     return await _channel.invokeMethod("triggerVibrationBurst", {
       "repeat": repeat,
       "duration": duration,
@@ -128,7 +134,8 @@ class NimmstaSdk {
     });
   }
 
-  Future<void> triggerBeeperBurst(int repeat, int duration, int pulseDuration, int intensity) async {
+  Future<void> triggerBeeperBurst(
+      int repeat, int duration, int pulseDuration, int intensity) async {
     return await _channel.invokeMethod("triggerBeeperBurst", {
       "repeat": repeat,
       "duration": duration,
