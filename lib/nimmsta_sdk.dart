@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/services.dart';
 import 'package:nimmsta_sdk/models/scan_picking_mode.dart';
