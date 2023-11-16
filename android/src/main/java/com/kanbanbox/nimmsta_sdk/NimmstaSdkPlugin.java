@@ -374,7 +374,7 @@ public class NimmstaSdkPlugin implements FlutterPlugin, MethodCallHandler, Activ
     public void didClickButton(@NotNull NIMMSTADevice nimmstaDevice, @Nullable final Button button, @NotNull ButtonClickEvent buttonClickEvent) {
         Log.i("NIMMSTA SDK", "didClickButton()");
         if (button != null) {
-            activity.runOnUiThread(() -> channel.invokeMethod("didClickButton", button.getAction()));
+            activity.runOnUiThread(() -> channel.invokeMethod("didClickButton", button.getName()));
         }
 
         Log.i("NIMMSTA SDK", "didTouch()");
