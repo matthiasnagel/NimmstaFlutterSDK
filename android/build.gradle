@@ -65,8 +65,8 @@ android {
 }
 
 dependencies {
-    api("com.nimmsta.core:shared-android:6.0.4492@aar")
-    api("com.nimmsta.core:android:6.0.2781@aar") {
+    api("com.nimmsta.core:shared-android:7.0.7654@aar")
+    api("com.nimmsta.core:android:6.0.6055@aar") {
         transitive = true
         changing = true
     }
